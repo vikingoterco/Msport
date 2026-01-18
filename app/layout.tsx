@@ -8,9 +8,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className="bg-black text-white">
+      <body className="bg-black text-white antialiased">
         <NavbarDock />
-        <main className="pt-20">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

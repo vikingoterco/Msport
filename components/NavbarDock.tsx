@@ -1,76 +1,52 @@
 "use client";
+import React, { useState } from "react";
 import {
   Navbar,
   NavBody,
   NavItems,
-  MobileNav,
   NavbarLogo,
   NavbarButton,
+  MobileNav,
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { useState } from "react";
 
 export default function NavbarDock() {
+  const [isOpen, setIsOpen] = useState(false);
+  
   const navItems = [
-    { name: "Features", link: "#features" },
-    { name: "Pricing", link: "#pricing" },
-    { name: "Contact", link: "#contact" },
+    { name: "Servicios", link: "#services" },
+    { name: "Mecánica", link: "#mecanica" },
+    { name: "Ubicación", link: "#ubicacion" },
+    { name: "Contacto", link: "#contacto" },
   ];
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   return (
-    <Navbar className="fixed top-0 left-0 w-full z-50">
+    <Navbar>
+      {/* Versión Escritorio */}
       <NavBody>
         <NavbarLogo />
         <NavItems items={navItems} />
-        <div className="flex items-center gap-4">
-          <NavbarButton variant="secondary">Login</NavbarButton>
-          <NavbarButton variant="primary">Book a call</NavbarButton>
+        <div className="flex items-center gap-2">
+          <NavbarButton variant="secondary">Acceder</NavbarButton>
+          <NavbarButton variant="primary">Agendar Cita</NavbarButton>
         </div>
       </NavBody>
 
+      {/* Versión Móvil */}
       <MobileNav>
         <MobileNavHeader>
           <NavbarLogo />
-          <MobileNavToggle
-            isOpen={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          />
+          <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
         </MobileNavHeader>
-
-        <MobileNavMenu
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        >
-          {navItems.map((item, idx) => (
-            <a
-              key={`mobile-link-${idx}`}
-              href={item.link}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="relative text-neutral-600 dark:text-neutral-300"
-            >
-              <span className="block">{item.name}</span>
+        <MobileNavMenu isOpen={isOpen}>
+          {navItems.map((item) => (
+            <a key={item.name} href={item.link} className="text-neutral-600 py-2 border-b border-neutral-100">
+              {item.name}
             </a>
           ))}
-          <div className="flex w-full flex-col gap-4">
-            <NavbarButton
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="secondary"
-              className="w-full"
-            >
-              Login
-            </NavbarButton>
-            <NavbarButton
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="primary"
-              className="w-full"
-            >
-              Book a call
-            </NavbarButton>
-          </div>
+          <NavbarButton variant="primary" className="w-full mt-2">Agendar Cita</NavbarButton>
         </MobileNavMenu>
       </MobileNav>
     </Navbar>
