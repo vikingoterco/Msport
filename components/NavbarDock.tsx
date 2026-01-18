@@ -1,76 +1,78 @@
 "use client";
-
-import React from "react";
-import FloatingDock from "@/components/ui/floating-dock";
 import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
-} from "@tabler/icons-react";
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
 
 export default function NavbarDock() {
-  const links = [
-    {
-      title: "Inicio",
-      icon: <IconHome className="h-full w-full text-white/80" />,
-      href: "#inicio",
-    },
-    {
-      title: "Servicios",
-      icon: <IconTerminal2 className="h-full w-full text-white/80" />,
-      href: "#servicios",
-    },
-    {
-      title: "BMW",
-      icon: <IconNewSection className="h-full w-full text-white/80" />,
-      href: "#bmw",
-    },
-    {
-      title: "Changelog",
-      icon: <IconExchange className="h-full w-full text-white/80" />,
-      href: "#changelog",
-    },
-    {
-      title: "X",
-      icon: <IconBrandX className="h-full w-full text-white/80" />,
-      href: "#",
-    },
-    {
-      title: "GitHub",
-      icon: <IconBrandGithub className="h-full w-full text-white/80" />,
-      href: "#",
-    },
+  const navItems = [
+    { name: "Features", link: "#features" },
+    { name: "Pricing", link: "#pricing" },
+    { name: "Contact", link: "#contact" },
   ];
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <nav
-      className="
-        fixed top-0 left-0 right-0 z-50
-        backdrop-blur-xl
-        bg-gradient-to-b from-[#0a0a0a]/90 to-[#0a0a0a]/80
-        shadow-[0_1px_0_rgba(255,255,255,0.08)]
-      "
-    >
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center">
+    <Navbar className="fixed top-0 left-0 w-full z-50">
+      <NavBody>
+        <NavbarLogo />
+        <NavItems items={navItems} />
+        <div className="flex items-center gap-4">
+          <NavbarButton variant="secondary">Login</NavbarButton>
+          <NavbarButton variant="primary">Book a call</NavbarButton>
+        </div>
+      </NavBody>
 
-        
-        {/* LOGO IZQUIERDA (NO INTERACTIVO) */}
-        <div className="absolute left-6 flex items-center pointer-events-none select-none">
-          <img
-            src="/msport.png"
-            alt="MSport"
-            className="h-25 w-auto object-contain opacity-100"
+      <MobileNav>
+        <MobileNavHeader>
+          <NavbarLogo />
+          <MobileNavToggle
+            isOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           />
-        </div>
+        </MobileNavHeader>
 
-        {/* DOCK CENTRADO */}
-        <div className="flex-1 flex justify-center">
-          <FloatingDock items={links} />
-        </div>
-      </div>
-    </nav>
+        <MobileNavMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
+        >
+          {navItems.map((item, idx) => (
+            <a
+              key={`mobile-link-${idx}`}
+              href={item.link}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="relative text-neutral-600 dark:text-neutral-300"
+            >
+              <span className="block">{item.name}</span>
+            </a>
+          ))}
+          <div className="flex w-full flex-col gap-4">
+            <NavbarButton
+              onClick={() => setIsMobileMenuOpen(false)}
+              variant="secondary"
+              className="w-full"
+            >
+              Login
+            </NavbarButton>
+            <NavbarButton
+              onClick={() => setIsMobileMenuOpen(false)}
+              variant="primary"
+              className="w-full"
+            >
+              Book a call
+            </NavbarButton>
+          </div>
+        </MobileNavMenu>
+      </MobileNav>
+    </Navbar>
   );
 }

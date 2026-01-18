@@ -10,7 +10,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="bg-black text-white">
         <NavbarDock />
-        {children}
+        <main className="pt-20">{children}</main>
       </body>
     </html>
   );
