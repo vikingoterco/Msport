@@ -12,8 +12,7 @@ export default function Page() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg text-white/80">
-            Taller especializado en vehículos BMW y alta categoría, con tecnología
-            de diagnóstico avanzada y atención profesional.
+            No todos los talleres están preparados para trabajar con vehículos de alta categoría. Nosotros somos un taller especializado en eso. Contamos con la última tecnología y el personal capacitado para devolver tu auto a su máximo rendimiento.
           </p>
 
           <div className="mt-10 flex gap-4">
